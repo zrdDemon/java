@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idp.web.system.dao.SysFhProportionNewDao">
+
+	<parameterMap id="parameterMap" type="com.idp.web.system.entity.SysFhProportionNew"></parameterMap>
+	<resultMap id="resultMap" type="com.idp.web.system.entity.SysFhProportionNew">
+		<result property="id" column="id"/>
+		<result property="fhValues" column="fh_values"/>
+		<result property="createDate" column="create_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="beginDate" column="begin_date"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="jfNum" column="jf_num"/>
+	</resultMap>
+	
+	<sql id="columnSql">
+		<trim suffixOverrides=",">
+			t.id,
+			t.fh_values,
+			t.create_date,
+			t.end_date,
+			t.begin_date,
+			t.is_delete,
+			t.jf_num,
+	 	</trim>
+	</sql>
+	
+	<select id="find" parameterMap="parameterMap" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from sys_fh_proportion_new t
+		<where>
+			<if test="beginDate != null and beginDate != ''">
+				and t.begin_date >= #{beginDate}			
+			</if>
+		</where>
+	</select>
+	
+	<select id="getById" parameterType="java.lang.String" resultMap="resultMap">
+		select
+			<include refid="columnSql"></include>
+		from sys_fh_proportion_new t
+		where t.id = #{value}
+	</select>
+	
+	<insert id="add" parameterMap="parameterMap">
+		insert into sys_fh_proportion_new
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			fh_values,
+			create_date,
+			end_date,
+			begin_date,
+			is_delete,
+			jf_num,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id},
+			#{fhValues},
+			#{createDate},
+			#{endDate},
+			#{beginDate},
+			#{isDelete},
+			#{jfNum},
+		</trim>
+	</insert>
+	
+	<insert id="batchAdd" parameterType="java.util.List">
+		insert into sys_fh_proportion_new
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			id,
+			fh_values,
+			create_date,
+			end_date,
+			begin_date,
+			is_delete,
+			jf_num,
+		</trim>
+		values
+		<foreach collection="list" item="item" separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				#{item.id},
+				#{item.fhValues},
+				#{item.createDate},
+				#{item.endDate},
+				#{item.beginDate},
+				#{item.isDelete},
+				#{item.jfNum},
+			</trim>
+		</foreach>
+	</insert>
+	
+	<update id="update" parameterMap="parameterMap">
+		update sys_fh_proportion_new
+		<set>
+			fh_values = #{fhValues},
+			create_date = #{createDate},
+			end_date = #{endDate},
+			begin_date = #{beginDate},
+			is_delete = #{isDelete},
+			jf_num = #{jfNum},
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id="updateNotNull" parameterMap="parameterMap">
+		update sys_fh_proportion_new
+		<set>
+			<if test="fhValues != null">
+			fh_values = #{fhValues},
+			</if>
+			<if test="createDate != null">
+			create_date = #{createDate},
+			</if>
+			<if test="endDate != null">
+			end_date = #{endDate},
+			</if>
+			<if test="beginDate != null">
+			begin_date = #{beginDate},
+			</if>
+			<if test="isDelete != null">
+			is_delete = #{isDelete},
+			</if>
+			<if test="jfNum != null">
+			jf_num = #{jfNum},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from sys_fh_proportion_new where id = #{value}
+	</delete>
+	
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from sys_fh_proportion_new where id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+</mapper>
