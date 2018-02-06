@@ -5,7 +5,7 @@
 	<parameterMap id="parameterMap" type="com.idp.web.generator.entity.CgDataSource"></parameterMap>
 	<resultMap id="resultMap" type="com.idp.web.generator.entity.CgDataSource"></resultMap>
 
-	<select id="find " parameterMap="parameterMap" resultMap="resultMap">
+	<select id="find" parameterMap="parameterMap" resultMap="resultMap">
 		select 
 			t.id ,
 			t.description,

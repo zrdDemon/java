@@ -33,10 +33,15 @@ public class CgDataSourceController extends BaseController {
 	
 	@RequestMapping("/list")
 	public String list(CgDataSource dataSource,Page<CgDataSource> page,HttpServletRequest request){
+		try{
+            request.setAttribute("page", cgDataSourceService.findByPage(dataSource, page));
+
+        }catch (Exception e){
+		    e.printStackTrace();
+        }
+        return "generator/datasource/dataSourceList";
 		
-		request.setAttribute("page", cgDataSourceService.findByPage(dataSource, page));
-		
-		return "generator/datasource/dataSourceList";
+
 	}
 	
 	@RequestMapping("/dataSource")
